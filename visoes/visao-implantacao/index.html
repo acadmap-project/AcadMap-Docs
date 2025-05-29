@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#visao-de-implantacao" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -429,6 +434,21 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    5.3 Visão de Implantação
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
@@ -441,6 +461,34 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#diagrama-de-implantacao-dep-01" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagrama de Implantação - DEP-01
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -649,6 +697,25 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#diagrama-de-implantacao-dep-01" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagrama de Implantação - DEP-01
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -664,9 +731,86 @@
 
 
 
-  <h1>5.3 Visão de Implantação</h1>
+<h1 id="visao-de-implantacao">Visão de Implantação</h1>
+<p>A Visão de Implantação descreve como o sistema AcadMap é fisicamente distribuído no ambiente de execução, com foco na infraestrutura de contêineres Docker. Essa visão é fundamental para compreender o ambiente operacional do sistema, incluindo a alocação de componentes, fluxos de comunicação, protocolos utilizados e fronteiras de segurança.</p>
+<p>O diagrama a seguir apresenta uma visão de alto nível da implantação do sistema em um cenário típico de produção, com os seguintes elementos principais:</p>
+<ul>
+<li>Usuário final, que acessa o sistema por meio de um navegador web;</li>
+<li>Fronteira de rede, que separa o ambiente da internet pública da rede interna de containers;</li>
+<li>Container Apache HTTP Server, responsável por servir os arquivos estáticos do frontend (React + Vite);</li>
+<li>Container Backend (Spring Boot), que implementa a lógica de negócio e expõe as APIs REST em JSON;</li>
+<li>Container Banco de Dados (PostgreSQL), que armazena persistentemente os dados da aplicação;</li>
+<li>Toda a comunicação entre os containers ocorre dentro de uma rede Docker interna (bridge), utilizando protocolos padronizados como HTTPS, HTTP e JDBC.</li>
+</ul>
+<p>Esse modelo garante isolamento entre serviços, facilita o escalonamento e simplifica o processo de implantação e manutenção por meio de orquestração baseada em contêineres.</p>
+<h2 id="diagrama-de-implantacao-dep-01">Diagrama de Implantação - DEP-01</h2>
+<pre class="mermaid"><code>graph TD
+    user["Usuário (Navegador Web)"]
 
+    %% Rede Docker Interna
+    subgraph "acadmap-net (intranet)"
 
+        subgraph "Container do Frontend"
+            apache["Apache"]
+
+            frontend["Aplicação React (Vite)"]
+        end
+
+        subgraph "Container do Backend"
+            backend["Aplicação Spring Boot"]
+            api["API REST (Java)"]
+        end
+
+        subgraph "Container do Banco de Dados"
+            db["PostgreSQL"]
+        end
+
+    end
+
+    %% Conexões
+    user --&gt;|internet - https| apache
+    apache --&gt;|HTTP - porta 8080| backend
+    backend --&gt; api
+    backend --&gt;|JDBC - porta 5432| db</code></pre>
+<p>Clique nos blocos abaixo para visualizar versões em outros formatos:</p>
+<details class="info">
+<summary>Versão PlantUML</summary>
+<div class="highlight"><pre><span></span><code>    @startuml
+    title DEP-01 – Diagrama de Implantação do Sistema AcadMap   
+    actor user as &quot;Usuário&quot;
+    node browser as &quot;Navegador Web&quot;     
+    &#39; Fronteira entre internet pública e rede interna Docker
+    boundary &quot;Fronteira de Rede\n(Pública &gt; Interna)&quot; as internet   
+    &#39; Rede interna - Docker
+    node &quot;Rede Docker Interna (acadmap-net)&quot; as docker_net {    
+    node &quot;Container Apache HTTP Server&quot; as apache {
+    port p_https
+    artifact &quot;Frontend (JS + React)&quot; as front
+    }   
+    node &quot;Container Backend Spring Boot&quot; as backend {
+    artifact &quot;API REST (Java)&quot; as api
+    }   
+    node &quot;Container Banco de Dados&quot; as db_container {
+    database &quot;PostgreSQL&quot; as db
+    }
+    }   
+    &#39; Ligações com a fronteira (com indicação clara do ponto de transição)
+    user --&gt; browser
+    browser --&gt; internet : HTTPS
+    internet --&gt; p_https    
+    &#39; Conexões internas da rede Docker
+    apache --&gt; backend : HTTP (porta 8080)
+    backend --&gt; db : JDBC (porta 5432)
+    @enduml
+</code></pre></div>
+</details>
+<details class="info">
+<summary>Versão .png</summary>
+<p><img alt="DEP-01" src="../../diagramas/deployment/DEP-01-alt.png" /></p>
+</details>
+<p>O diagrama IMPL-01 mostra que o usuário interage com o sistema AcadMap por meio de um navegador, acessando o frontend hospedado em um servidor Apache via HTTPS. Esse frontend comunica-se com a API REST do backend via HTTP, que por sua vez realiza operações no banco de dados PostgreSQL utilizando JPA via JDBC.</p>
+<p>A separação entre a Internet e a infraestrutura interna do sistema evidencia uma preocupação com segurança e organização da rede. O servidor de aplicação e o banco de dados são acessíveis apenas internamente, enquanto a interface pública é controlada pelo servidor web.</p>
+<hr />
 
 
 
