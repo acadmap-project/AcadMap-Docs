@@ -128,6 +128,13 @@
     </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#equipes">
+<span class="md-ellipsis">
+      Equipes
+    </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -296,6 +303,13 @@
     </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#equipes">
+<span class="md-ellipsis">
+      Equipes
+    </span>
+</a>
+</li>
 </ul>
 </nav>
 </div>
@@ -304,6 +318,7 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1 id="1-introducao">1. Introdução</h1>
+<p><img alt="Static Badge" src="https://img.shields.io/badge/Arquitetura-%230074B6?style=for-the-badge&amp;logo=githubactions&amp;logoColor=%23F2F2F2"/></p>
 <p>Este documento descreve a arquitetura do sistema <strong>AcadMap</strong>, abordando suas principais decisões estruturais, visões, preocupações dos stakeholders e justificativas técnicas. Ele está baseado nos princípios básicos da ISO/IEC 42010, com foco em clareza, rastreabilidade e evolução futura do sistema.</p>
 <h3 id="11-objetivo">1.1 Objetivo</h3>
 <p>Apresentar a estrutura e organização da solução, documentar decisões arquiteturais e comunicar de forma clara entre todos os envolvidos.</p>
@@ -314,14 +329,25 @@
 <li><strong>AcadMap</strong>: Nome do sistema representado nesta arquitetura. Plataforma para análise de produção científica baseada em periódicos e eventos.</li>
 <li><strong>MVP</strong> (<em>Minimum Viable Product</em>): Versão mínima funcional do sistema, com as funcionalidades essenciais para validar a proposta.</li>
 <li><strong>API REST</strong>: Interface de comunicação baseada em HTTP com operações sobre recursos, utilizando padrões como GET, POST, PUT e DELETE.</li>
-<li><strong>Stakeholder (ST)</strong>: Pessoa, grupo ou organização com interesse direto ou indireto na definição, uso ou evolução do sistema. Referenciado por códigos <code>STxx</code> (ex: ST01 – Desenvolvedor Backend).</li>
-<li><strong>Preocupação Arquitetural (P)</strong>: Necessidade ou exigência relevante de um ou mais stakeholders que deve ser considerada na arquitetura. Referenciada por <code>Pxx</code> (ex: P01 – Clareza de código).</li>
-<li><strong>Ponto de Vista (PV)</strong>: Perspectiva sob a qual a arquitetura é descrita, tratando um conjunto de preocupações. Referenciado por <code>PVxx</code> (ex: PV01 – Visão Lógica).</li>
+<li><strong>Stakeholder (ST)</strong>: Pessoa, grupo ou organização com interesse direto ou indireto na definição, uso ou evolução do sistema. Referenciado por códigos <code>STxx</code> (ex: <abbr title="Desenvolvedor Back">ST01</abbr> – Desenvolvedor Backend).</li>
+<li><strong>Preocupação Arquitetural (P)</strong>: Necessidade ou exigência relevante de um ou mais stakeholders que deve ser considerada na arquitetura. Referenciada por <code>Pxx</code> (ex: <abbr title="Clareza e qualidade do código">P01</abbr> – Clareza de código).</li>
+<li><strong>Ponto de Vista (PV)</strong>: Perspectiva sob a qual a arquitetura é descrita, tratando um conjunto de preocupações. Referenciado por <code>PVxx</code> (ex: <abbr title="Lógico">PV01</abbr> – Visão Lógica).</li>
 <li><strong>DAS</strong>: Documento de Arquitetura de Software.</li>
 <li><strong>COMP-BACK-01</strong>, <strong>SEQU-MTRC-02</strong>, etc.: Códigos de identificação dos diagramas utilizados ao longo do documento, seguindo o padrão <code>[TIPO]-[OBJETO]-[NÚMERO]</code>.</li>
 <li><strong>Controller / Service / Repository / Model</strong>: Camadas da arquitetura backend seguindo o padrão MVC, responsáveis respectivamente por controlar requisições, encapsular regras de negócio, acessar dados e representar entidades de domínio.</li>
 <li><strong>Pages / Components / Services (frontend)</strong>: Diretórios lógicos do frontend React. <code>pages</code> contém telas principais, <code>components</code> agrupa componentes reutilizáveis, e <code>services</code> abstrai chamadas à API.</li>
 </ul>
+<h2 id="equipes">Equipes</h2>
+<p>Gestão de Projeto<br/>
+<img alt="Static Badge" src="https://img.shields.io/badge/Gest%C3%A3o%20de%20Projeto-%23C97E10?style=for-the-badge&amp;logo=jira&amp;logoColor=%23F2F2F2"/></p>
+<p>Arquitetura<br/>
+<img alt="Static Badge" src="https://img.shields.io/badge/Arquitetura-%230074B6?style=for-the-badge&amp;logo=githubactions&amp;logoColor=%23F2F2F2"/></p>
+<p>Requisitos<br/>
+<img alt="Static Badge" src="https://img.shields.io/badge/Requisitos-%23824DAB?style=for-the-badge&amp;logo=notion&amp;logoColor=%23F2F2F2"/></p>
+<p>Desenvolvimento<br/>
+<img alt="Static Badge" src="https://img.shields.io/badge/Desenvolvimento-%2300A36C?style=for-the-badge&amp;logo=springboot&amp;logoColor=%23F2F2F2"/></p>
+<p>Testes<br/>
+<img alt="Static Badge" src="https://img.shields.io/badge/Testes-%23D72638?style=for-the-badge&amp;logo=testrail&amp;logoColor=%23F2F2F2"/></p>
 <hr/>
 </article>
 </div>
@@ -346,7 +372,7 @@
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "..", "features": ["content.diagrams"], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script id="__config" type="application/json">{"base": "..", "features": ["content.diagrams", "content.tooltips"], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
 <script src="../assets/javascripts/bundle.c8b220af.min.js"></script>
 </body>
 </html>

@@ -241,6 +241,7 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1 id="4-pontos-de-vista-arquiteturais">4. Pontos de Vista Arquiteturais</h1>
+<p><img alt="Static Badge" src="https://img.shields.io/badge/Arquitetura-%230074B6?style=for-the-badge&amp;logo=githubactions&amp;logoColor=%23F2F2F2"/></p>
 <p>Pontos de vista arquiteturais são descrições específicas de aspectos do sistema sob diferentes perspectivas, com o objetivo de abordar um subconjunto das preocupações levantadas pelos stakeholders. Cada ponto de vista adota uma notação e uma forma de representação adequada à natureza das informações que transmite. A adoção de múltiplos pontos de vista facilita a comunicação entre as partes interessadas, permite avaliações segmentadas da arquitetura e aumenta a rastreabilidade das decisões técnicas.</p>
 <p>A tabela a seguir descreve os pontos de vista adotados neste projeto, sua finalidade, artefatos utilizados e as principais preocupações que cada um trata.</p>
 <table>
@@ -255,39 +256,39 @@
 </thead>
 <tbody>
 <tr>
-<td>PV01</td>
+<td><abbr title="Lógico">PV01</abbr></td>
 <td>Lógico</td>
 <td>Modelar os módulos, componentes e suas responsabilidades</td>
 <td>Diagrama de Componentes (UML)</td>
-<td>P02, P05, P06, P07, P08, P10</td>
+<td><abbr title="Experiência do usuário (UX)">P02</abbr>, <abbr title="Alta disponibilidade e desempenho">P05</abbr>, <abbr title="Evolutividade e manutenção a médio/longo prazo">P06</abbr>, <abbr title="Possibilidade de integração futura com outros sistemas">P07</abbr>, <abbr title="Suporte a diferentes perfis de usuário">P08</abbr>, <abbr title="Segurança e privacidade dos dados pessoais">P10</abbr></td>
 </tr>
 <tr>
-<td>PV02</td>
+<td><abbr title="Desenvolvimento">PV02</abbr></td>
 <td>Desenvolvimento</td>
 <td>Representar a organização do código e boas práticas adotadas</td>
 <td>Diagrama de pacotes (UML), árvore de arquivos</td>
-<td>P01, P03, P04, P06, P09</td>
+<td><abbr title="Clareza e qualidade do código">P01</abbr>, <abbr title="Testabilidade e cobertura de testes">P03</abbr>, <abbr title="Tempo de entrega e valor entregue ao usuário">P04</abbr>, <abbr title="Evolutividade e manutenção a médio/longo prazo">P06</abbr>, <abbr title="Adoção de boas práticas de engenharia">P09</abbr></td>
 </tr>
 <tr>
-<td>PV03</td>
+<td><abbr title="Implantação">PV03</abbr></td>
 <td>Implantação</td>
 <td>Modelar a infraestrutura de execução e distribuição do sistema</td>
 <td>Diagrama de Deploy (UML)</td>
-<td>P05, P07, P10</td>
+<td><abbr title="Alta disponibilidade e desempenho">P05</abbr>, <abbr title="Possibilidade de integração futura com outros sistemas">P07</abbr>, <abbr title="Segurança e privacidade dos dados pessoais">P10</abbr></td>
 </tr>
 <tr>
-<td>PV04</td>
+<td><abbr title="Processo">PV04</abbr></td>
 <td>Processo</td>
 <td>Representar interações e fluxos de execução</td>
 <td>Diagrama de Sequência (UML)</td>
-<td>P03, P04, P10</td>
+<td><abbr title="Testabilidade e cobertura de testes">P03</abbr>, <abbr title="Tempo de entrega e valor entregue ao usuário">P04</abbr>, <abbr title="Segurança e privacidade dos dados pessoais">P10</abbr></td>
 </tr>
 <tr>
-<td>PV05</td>
+<td><abbr title="Uso">PV05</abbr></td>
 <td>Uso</td>
 <td>Ilustrar a experiência do usuário e seus fluxos de interação</td>
 <td>Cenários, fluxos, protótipos (Figma)</td>
-<td>P02, P04, P08</td>
+<td><abbr title="Experiência do usuário (UX)">P02</abbr>, <abbr title="Tempo de entrega e valor entregue ao usuário">P04</abbr>, <abbr title="Suporte a diferentes perfis de usuário">P08</abbr></td>
 </tr>
 </tbody>
 </table>
@@ -315,7 +316,7 @@
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "..", "features": ["content.diagrams"], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script id="__config" type="application/json">{"base": "..", "features": ["content.diagrams", "content.tooltips"], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
 <script src="../assets/javascripts/bundle.c8b220af.min.js"></script>
 </body>
 </html>
