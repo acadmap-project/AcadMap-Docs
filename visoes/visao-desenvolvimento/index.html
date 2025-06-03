@@ -177,6 +177,31 @@
     </span>
 </a>
 </li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#521-organizacao-de-diretorios-frontend-e-backend">
+<span class="md-ellipsis">
+      5.2.1 Organização de Diretórios (Frontend e Backend)
+    </span>
+</a>
+<nav aria-label="5.2.1 Organização de Diretórios (Frontend e Backend)" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#backend-backendsrcmainjavacomacadmap">
+<span class="md-ellipsis">
+      Backend (backend/src/main/java/com/acadmap)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#frontend-frontendsrc">
+<span class="md-ellipsis">
+      Frontend (frontend/src)
+    </span>
+</a>
+</li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#5211-workflow-de-versionamento">
 <span class="md-ellipsis">
@@ -210,22 +235,6 @@
 </ul>
 </nav>
 </li>
-</ul>
-</nav>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#git-add-nome-arquivo-git-commit-m-feat-added-new-button">
-<span class="md-ellipsis">
-      git add &lt;nome-arquivo&gt;
-git commit -m 'feat: added new button'
-
-    </span>
-</a>
-<nav aria-label="git add &lt;nome-arquivo&gt; git commit -m 'feat: added new button'" class="md-nav">
-<ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#enviando-suas-mudancas-ao-github">
 <span class="md-ellipsis">
@@ -293,6 +302,9 @@ git commit -m 'feat: added new button'
       Encerrando a branch
     </span>
 </a>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -413,6 +425,31 @@ git commit -m 'feat: added new button'
     </span>
 </a>
 </li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#521-organizacao-de-diretorios-frontend-e-backend">
+<span class="md-ellipsis">
+      5.2.1 Organização de Diretórios (Frontend e Backend)
+    </span>
+</a>
+<nav aria-label="5.2.1 Organização de Diretórios (Frontend e Backend)" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#backend-backendsrcmainjavacomacadmap">
+<span class="md-ellipsis">
+      Backend (backend/src/main/java/com/acadmap)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#frontend-frontendsrc">
+<span class="md-ellipsis">
+      Frontend (frontend/src)
+    </span>
+</a>
+</li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#5211-workflow-de-versionamento">
 <span class="md-ellipsis">
@@ -446,22 +483,6 @@ git commit -m 'feat: added new button'
 </ul>
 </nav>
 </li>
-</ul>
-</nav>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#git-add-nome-arquivo-git-commit-m-feat-added-new-button">
-<span class="md-ellipsis">
-      git add &lt;nome-arquivo&gt;
-git commit -m 'feat: added new button'
-
-    </span>
-</a>
-<nav aria-label="git add &lt;nome-arquivo&gt; git commit -m 'feat: added new button'" class="md-nav">
-<ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#enviando-suas-mudancas-ao-github">
 <span class="md-ellipsis">
@@ -529,6 +550,9 @@ git commit -m 'feat: added new button'
       Encerrando a branch
     </span>
 </a>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -612,6 +636,38 @@ git commit -m 'feat: added new button'
 │       └── 📄 ci.yml
 └── 📄 README.md
 </code></pre></div>
+<h2 id="521-organizacao-de-diretorios-frontend-e-backend">5.2.1 Organização de Diretórios (Frontend e Backend)</h2>
+<p>A estrutura de diretórios do projeto AcadMap segue uma organização baseada em boas práticas de engenharia de software, com separação clara entre responsabilidades tanto no backend quanto no frontend.</p>
+<h3 id="backend-backendsrcmainjavacomacadmap">Backend (<code>backend/src/main/java/com/acadmap</code>)</h3>
+<p>No backend, implementado com Spring Boot, adota-se o padrão MVC (Model-View-Controller) organizado em quatro diretórios principais:</p>
+<ul>
+<li>
+<p><strong>controller/</strong>: contém as classes responsáveis por lidar com as requisições HTTP. Cada classe define os endpoints REST da aplicação, delegando a lógica de negócio para os serviços. Exemplo: <code>AutorController.java</code>, <code>ArtigoController.java</code>.</p>
+</li>
+<li>
+<p><strong>service/</strong>: abriga as classes que implementam a lógica de negócio. Os serviços recebem chamadas dos controladores, processam regras, validam dados e orquestram chamadas aos repositórios. Exemplo: <code>AutorService.java</code>.</p>
+</li>
+<li>
+<p><strong>repository/</strong>: inclui as interfaces responsáveis pelo acesso a dados, geralmente estendendo <code>JpaRepository</code> ou <code>CrudRepository</code>. Elas encapsulam a persistência e possibilitam operações como salvar, buscar e deletar entidades. Exemplo: <code>AutorRepository.java</code>.</p>
+</li>
+<li>
+<p><strong>model/</strong>: define as classes que representam as entidades do domínio, mapeadas para as tabelas do banco de dados através de anotações JPA. Exemplo: <code>Autor.java</code>, <code>Artigo.java</code>.</p>
+</li>
+</ul>
+<p>Essa separação garante coesão, testabilidade e facilidade de manutenção no backend.</p>
+<h3 id="frontend-frontendsrc">Frontend (<code>frontend/src</code>)</h3>
+<p>No frontend, construído com React e Vite, o código é dividido de acordo com a função dos elementos dentro da interface e da lógica da aplicação:</p>
+<ul>
+<li>
+<p><strong>pages/</strong>: agrupa os componentes de alto nível que representam as páginas principais do sistema, geralmente associadas às rotas do aplicativo. Cada página é composta por uma combinação de componentes reutilizáveis. Exemplo: <code>DashboardPage.jsx</code>, <code>RelatoriosPage.jsx</code>.</p>
+</li>
+<li>
+<p><strong>components/</strong>: reúne componentes visuais reutilizáveis, como botões, tabelas, formulários e cartões. Esses elementos são usados em múltiplas páginas para garantir consistência e modularidade na interface. Exemplo: <code>CardIndicador.jsx</code>, <code>TabelaArtigos.jsx</code>.</p>
+</li>
+<li>
+<p><strong>services/</strong>: contém os módulos responsáveis pela comunicação com a API backend. Esses serviços encapsulam chamadas HTTP usando bibliotecas como <code>axios</code> ou <code>fetch</code>, centralizando a lógica de consumo da API. Exemplo: <code>autorService.js</code>, <code>artigoService.js</code>.</p>
+</li>
+</ul>
 <h3 id="5211-workflow-de-versionamento">5.2.1.1 Workflow de Versionamento</h3>
 <p>Esta seção tem como objetivo ser um guia para o desenvolvedor. Nele, abordaremos os seguintes assuntos:</p>
 <ul>
@@ -644,9 +700,10 @@ git commit -m 'feat: added new button'
 <hr/>
 <h5 id="commitando-suas-modificacoes">Commitando suas modificações</h5>
 <p>Com a branch criada localmente e seu trabalho do dia completo, deve-se adicionar as mudanças feitas ao seu repositório local:</p>
-<h2 id="git-add-nome-arquivo-git-commit-m-feat-added-new-button"><div class="highlight"><pre><span></span><code>git add &lt;nome-arquivo&gt;
+<div class="highlight"><pre><span></span><code>git add &lt;nome-arquivo&gt;
 git commit -m 'feat: added new button'
-</code></pre></div></h2>
+</code></pre></div>
+<hr/>
 <h4 id="enviando-suas-mudancas-ao-github">Enviando suas mudanças ao Github</h4>
 <p>Com o fim do seu dia de trabalho e seu repositório local contendo as suas últimas mudanças feitas, é importante manda-las para o repositório remoto para mante-lo sempre atualizado:</p>
 <div class="highlight"><pre><span></span><code>git push origin feature/teste
