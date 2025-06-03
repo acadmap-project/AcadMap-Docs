@@ -56,6 +56,34 @@ Cada repositório possui:
 └── 📄 README.md
 ```
 
+A estrutura de diretórios do projeto AcadMap segue uma organização baseada em boas práticas de engenharia de software, com separação clara entre responsabilidades tanto no backend quanto no frontend.
+
+### Backend (`backend/src/main/java/com/acadmap`)
+
+No backend, implementado com Spring Boot, adota-se o padrão MVC (Model-View-Controller) organizado em quatro diretórios principais:
+
+- **controller/**: contém as classes responsáveis por lidar com as requisições HTTP. Cada classe define os endpoints REST da aplicação, delegando a lógica de negócio para os serviços. Exemplo: `AutorController.java`, `ArtigoController.java`.
+
+- **service/**: abriga as classes que implementam a lógica de negócio. Os serviços recebem chamadas dos controladores, processam regras, validam dados e orquestram chamadas aos repositórios. Exemplo: `AutorService.java`.
+
+- **repository/**: inclui as interfaces responsáveis pelo acesso a dados, geralmente estendendo `JpaRepository` ou `CrudRepository`. Elas encapsulam a persistência e possibilitam operações como salvar, buscar e deletar entidades. Exemplo: `AutorRepository.java`.
+
+- **model/**: define as classes que representam as entidades do domínio, mapeadas para as tabelas do banco de dados através de anotações JPA. Exemplo: `Autor.java`, `Artigo.java`.
+
+Essa separação garante coesão, testabilidade e facilidade de manutenção no backend.
+
+### Frontend (`frontend/src`)
+
+No frontend, construído com React e Vite, o código é dividido de acordo com a função dos elementos dentro da interface e da lógica da aplicação:
+
+- **pages/**: agrupa os componentes de alto nível que representam as páginas principais do sistema, geralmente associadas às **rotas da API**. Cada página é composta por uma combinação de componentes reutilizáveis. Exemplo: `DashboardPage.jsx`, `RelatoriosPage.jsx`.
+
+- **components/**: reúne componentes visuais reutilizáveis, como botões, tabelas, formulários e cartões. Esses elementos são usados em múltiplas páginas para garantir consistência e modularidade na interface. Exemplo: `CardIndicador.jsx`, `TabelaArtigos.jsx`.
+
+- **services/**: contém os módulos responsáveis pela comunicação com a API backend. Esses serviços encapsulam chamadas HTTP usando bibliotecas como `axios` ou `fetch`, centralizando a lógica de consumo da API. Exemplo: `autorService.js`, `artigoService.js`.
+
+---
+
 ### 5.2.1.1 Workflow de Versionamento
 
 Esta seção tem como objetivo ser um guia para o desenvolvedor. Nele, abordaremos os seguintes assuntos:
