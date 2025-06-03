@@ -4,8 +4,8 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="Documentação de Arquitetura de Sistema" name="description"/>
-<link href="../dar-index/" rel="prev"/>
-<link href="../ferr-apoio-arq/" rel="next"/>
+<link href="../rda-index/" rel="prev"/>
+<link href="../riscos/" rel="next"/>
 <link href="../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-9.6.11" name="generator"/>
 <title>7. Governança de Arquitetura - DAS - AcadMap</title>
@@ -21,7 +21,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#governanca-de-arquitetura">
+<a class="md-skip" href="#7-governanca-de-arquitetura">
           Skip to content
         </a>
 </div>
@@ -177,7 +177,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../dar-index/">
+<a class="md-nav__link" href="../rda-index/">
 <span class="md-ellipsis">
     6. Decisões Arquiteturais
     
@@ -186,25 +186,60 @@
 </li>
 <li class="md-nav__item md-nav__item--active">
 <input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    7. Governança de Arquitetura
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
 <a class="md-nav__link md-nav__link--active" href="./">
 <span class="md-ellipsis">
     7. Governança de Arquitetura
     
   </span>
 </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#71-decisoes-arquiteturais">
+<span class="md-ellipsis">
+      7.1 Decisões Arquiteturais
+    </span>
+</a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../ferr-apoio-arq/">
+<a class="md-nav__link" href="#72-alteracoes-no-das">
 <span class="md-ellipsis">
-    8. Ferramentas de Apoios à Arquitetura
-    
-  </span>
+      7.2 Alterações no DAS
+    </span>
 </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#73-sobre-o-versionamento">
+<span class="md-ellipsis">
+      7.3 Sobre o Versionamento
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#74-ferramentas-de-apoio-a-arquitetura">
+<span class="md-ellipsis">
+      7.4 Ferramentas de Apoio à Arquitetura
+    </span>
+</a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../riscos/">
 <span class="md-ellipsis">
-    9. Riscos e Mitigações
+    8. Riscos e Mitigações
     
   </span>
 </a>
@@ -234,14 +269,98 @@
 <div class="md-sidebar__scrollwrap">
 <div class="md-sidebar__inner">
 <nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#71-decisoes-arquiteturais">
+<span class="md-ellipsis">
+      7.1 Decisões Arquiteturais
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#72-alteracoes-no-das">
+<span class="md-ellipsis">
+      7.2 Alterações no DAS
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#73-sobre-o-versionamento">
+<span class="md-ellipsis">
+      7.3 Sobre o Versionamento
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#74-ferramentas-de-apoio-a-arquitetura">
+<span class="md-ellipsis">
+      7.4 Ferramentas de Apoio à Arquitetura
+    </span>
+</a>
+</li>
+</ul>
 </nav>
 </div>
 </div>
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1 id="governanca-de-arquitetura">Governança de Arquitetura</h1>
+<h1 id="7-governanca-de-arquitetura">7. Governança de Arquitetura</h1>
 <p><img alt="Static Badge" src="https://img.shields.io/badge/Arquitetura-%230074B6?style=for-the-badge&amp;logo=githubactions&amp;logoColor=%23F2F2F2"/></p>
+<p>A governança da arquitetura do sistema AcadMap segue diretrizes que garantem rastreabilidade, consistência e validação colaborativa das decisões técnicas. </p>
+<h2 id="71-decisoes-arquiteturais">7.1 Decisões Arquiteturais</h2>
+<p>Todas as decisões arquiteturais relevantes são formalizadas por meio de registros do tipo RDA (Registro de Decisão Arquitetural), numerados sequencialmente e armazenados no repositório <code>docs/rda</code>. </p>
+<h2 id="72-alteracoes-no-das">7.2 Alterações no DAS</h2>
+<p>Qualquer alteração significativa no Documento de Arquitetura de Sistema (DAS) deve ser submetida via <em>pull request</em>, obrigatoriamente revisada por outro membro da equipe de Arquitetura. Essa prática assegura que as modificações sejam avaliadas quanto à sua conformidade com os princípios arquiteturais e impacto no sistema.</p>
+<h2 id="73-sobre-o-versionamento">7.3 Sobre o Versionamento</h2>
+<p>Além disso, as versões do DAS são etiquetadas conforme os ciclos de entrega do projeto, utilizando versionamento semântico e.g. <code>v1.0</code>, <code>v1.1</code> e assim por diante. Isso permite o controle histórico da evolução da arquitetura e facilita a referência a versões específicas durante auditorias, revisões técnicas e fases de manutenção.</p>
+<h2 id="74-ferramentas-de-apoio-a-arquitetura">7.4 Ferramentas de Apoio à Arquitetura</h2>
+<p>A elaboração, manutenção e disseminação da arquitetura do sistema AcadMap são apoiadas por um conjunto de ferramentas que promovem automação, padronização e rastreabilidade. Essas ferramentas estão integradas ao fluxo de desenvolvimento e à governança do DAS, conforme a tabela abaixo:</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Ferramenta</th>
+<th>Finalidade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>001</td>
+<td>MkDocs</td>
+<td>Geração da documentação navegável em Markdown</td>
+</tr>
+<tr>
+<td>002</td>
+<td>Mermaid</td>
+<td>Criação de diagramas leves em Markdown</td>
+</tr>
+<tr>
+<td>003</td>
+<td>PlantUML</td>
+<td>Modelagem de diagramas estruturados via texto</td>
+</tr>
+<tr>
+<td>004</td>
+<td>GitHub</td>
+<td>Controle de versionamento e colaboração</td>
+</tr>
+<tr>
+<td>005</td>
+<td>GitHub Actions</td>
+<td>Automação de pipelines CI/CD e publicação</td>
+</tr>
+<tr>
+<td>006</td>
+<td>GitHub Projects</td>
+<td>Acompanhamento visual das atividades (Kanban)</td>
+</tr>
+</tbody>
+</table>
 </article>
 </div>
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
