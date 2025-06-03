@@ -20,3 +20,6 @@
 *[ST03]: Analista de QA
 *[ST04]: Product Owner
 *[ST05]: DPO
+
+*[DAS]: Documento de Arquitetura de Sistema
+*[RDA]: Registro de Decisão Arquitetural
