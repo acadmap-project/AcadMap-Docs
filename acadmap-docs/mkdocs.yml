@@ -55,9 +55,8 @@ nav:
       - 5.3 Visão de Implantação: visoes/visao-implantacao.md
       - 5.4 Visão de Processo: visoes/visao-processo.md
       - 5.5 Visão de Cenários: visoes/visao-cenarios.md
-  - 6. Decisões Arquiteturais: dar-index.md
+  - 6. Decisões Arquiteturais: rda-index.md
   - 7. Governança de Arquitetura: governanca-arquitetura.md
-  - 8. Ferramentas de Apoios à Arquitetura: ferr-apoio-arq.md
-  - 9. Riscos e Mitigações: riscos.md
+  - 8. Riscos e Mitigações: riscos.md
   - Glossário: glossario.md
   - Referências: referencias.md
