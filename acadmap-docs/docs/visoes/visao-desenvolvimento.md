@@ -113,6 +113,7 @@ Com a branch criada localmente e seu trabalho do dia completo, deve-se adicionar
 git add <nome-arquivo>
 git commit -m 'feat: added new button'
 ```
+
 ---
 
 #### Enviando suas mudanças ao Github
