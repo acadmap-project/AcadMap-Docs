@@ -18,10 +18,21 @@ O código e a documentação do sistema estão hospedados no GitHub:
 
 Todos os repositórios seguem boas práticas de versionamento (`main`, `develop`), commits semânticos (conventional commits), e segue o Git Trunk Flow, com CI/CD configurado via GitHub Actions.
 
+### Estratégia de Branches
+
+- main: código estável e pronto para produção.
+- dev: código em fase de integração e testes.
+- feature/*: branches específicas para novas funcionalidades ou correções.
+
+Exemplos de nomes de branchs:
+
+- feature/cadastro-usuario
+- bug/fix-header-mobile
+- chore/atualiza-dependencias
+
 Cada repositório possui:
 
 - Arquivo `README.md` com instruções de uso e contribuição
-- Padrão de branches (`feature/*`, `fix/*`, `hotfix/*`)
 - Pull Requests com revisão obrigatória
 
 ### Modelo de Estrutura de Arquivos
