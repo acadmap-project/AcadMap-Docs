@@ -1,6 +1,6 @@
-# DAS - Documentação de Arquitetura de Sistema
+# DAS - Documento de Arquitetura de Sistema
 
-Bem-vindo à documentação de arquitetura do sistema **AcadMap**!
+Bem-vindo ao documento de arquitetura do sistema **AcadMap**!
 
 ## O que é um DAS?
 
