@@ -1,0 +1,181 @@
+@startuml
+header 
+SEQ01-RF12-Principal
+endheader
+
+footer
+Referente ao fluxo principal do RF12 no documento de requisitos
+endfooter
+
+title RF12 - Cadastrar Usuário (Fluxo Principal)
+
+actor Usuario
+participant "Tela de Cadastro" as UI
+participant "Sistema" as App
+database "Banco de Dados" as DB
+participant "Log" as Log
+
+== Início do Cadastro ==
+Usuario -> UI : Acessa a funcionalidade "Cadastrar usuário"
+UI -> Usuario : Exibe formulário de cadastro
+
+Usuario -> UI : Preenche nome, área, programa, e-mail e senha
+note right of UI
+[A1] Se houver campos obrigatórios não preenchidos:\n7.1.1 Destaca os campos em vermelho\n7.1.2 Exibe mensagem com campos obrigatórios\n7.1.3 Bloqueia o envio do formulário
+end note
+
+== Escolha da Senha ==
+alt [[Usuário fornece senha]]
+    App -> App : Usa senha informada
+else [[Sistema gera senha]]
+    App -> App : Gera senha automaticamente
+end
+
+UI -> App : Envia dados preenchidos
+
+App -> DB : Verifica se o e-mail já está cadastrado
+DB --> App : E-mail não encontrado
+note right of App
+[A2] Se o e-mail já estiver cadastrado:\n5.1.1 Exibe mensagem de e-mail duplicado\n5.1.2 Destaca campo de e-mail em vermelho\n5.1.3 Bloqueia cadastro até correção
+end note
+
+App -> App : Valida formato de e-mail e senha
+
+App -> DB : Verifica existência do programa
+DB --> App : Programa encontrado
+
+== Definição de Perfil ==
+App -> App : Verifica se usuário é administrador
+alt [[Usuário não é administrador]]
+    App -> App : Define perfil como "Pesquisador"
+else [[Usuário é administrador]]
+    UI -> Usuario : Solicita perfil (Pesquisador/Auditor)
+    Usuario -> UI : Informa perfil
+    UI -> App : Envia perfil selecionado
+    note right of UI
+    [A3] Se o perfil não for informado:\n8.2.1.1 Destaca campo de perfil\n8.2.1.2 Exibe mensagem de seleção obrigatória\n8.2.1.3 Impede finalização do cadastro
+    end note
+end
+
+== Salvamento ==
+App -> DB : Salva novo usuário
+DB --> App : Confirmação de salvamento
+note right of App
+[A4] Se ocorrer erro ao salvar:\n9.1.1 Exibe mensagem de erro\n9.1.2 Registra erro no log interno\n9.1.3 Mantém usuário na tela para nova tentativa
+end note
+
+App -> Log : Registra ação de cadastro
+Log --> App : Confirmação de log
+
+App -> UI : Retorna mensagem de sucesso
+UI -> Usuario : Exibe mensagem de sucesso
+@enduml
+
+
+@startuml
+header 
+SEQ02-RF12-A1
+endheader
+
+footer
+Referente ao fluxo secundário 7.1 do RF12 no documento de requisitos
+endfooter
+
+title A1 - Campos obrigatórios não preenchidos
+
+actor Usuario
+participant "Tela de Cadastro" as UI
+participant "Sistema" as App
+
+Usuario -> UI : Preenche parcialmente o formulário
+UI -> App : Envia dados incompletos
+
+App -> UI : Detecta campos obrigatórios ausentes
+UI -> Usuario : Destaca os campos ausentes em vermelho
+UI -> Usuario : Exibe mensagem "Preencha todos os campos obrigatórios"
+UI -> Usuario : Bloqueia conclusão do cadastro
+@enduml
+
+
+@startuml
+header 
+SEQ02-RF12-A2
+endheader
+
+footer
+Referente ao fluxo secundário 5.1 do RF12 no documento de requisitos
+endfooter
+
+title A2 - E-mail já cadastrado
+
+actor Usuario
+participant "Tela de Cadastro" as UI
+participant "Sistema" as App
+database "Banco de Dados" as DB
+
+Usuario -> UI : Preenche formulário de cadastro
+UI -> App : Envia dados preenchidos
+
+App -> DB : Verifica se o e-mail já está cadastrado
+DB --> App : E-mail encontrado
+
+App -> UI : Informa "E-mail já cadastrado"
+UI -> Usuario : Exibe mensagem de erro
+UI -> Usuario : Destaca campo de e-mail em vermelho
+UI -> Usuario : Bloqueia cadastro até novo e-mail válido
+@enduml
+
+
+@startuml
+header 
+SEQ02-RF12-A3
+endheader
+
+footer
+Referente ao fluxo secundário 8.2.1 do RF12 no documento de requisitos
+endfooter
+
+title A3 - Perfil não selecionado (Administrador)
+
+actor Usuario
+participant "Tela de Cadastro" as UI
+participant "Sistema" as App
+
+App -> App : Detecta que o usuário é administrador
+App -> UI : Solicita seleção de perfil
+UI -> Usuario : Solicita perfil (Pesquisador ou Auditor)
+Usuario -> UI : (Não seleciona perfil)
+
+UI -> Usuario : Destaca campo de perfil
+UI -> Usuario : Exibe mensagem "Selecione um perfil para o usuário (Pesquisador ou Auditor)"
+UI -> Usuario : Impede finalização do cadastro
+@enduml
+
+
+@startuml
+header 
+SEQ02-RF12-A4
+endheader
+
+footer
+Referente ao fluxo secundário 9.1 do RF12 no documento de requisitos
+endfooter
+
+title A4 - Erro ao salvar no banco de dados
+
+actor Usuario
+participant "Tela de Cadastro" as UI
+participant "Sistema" as App
+database "Banco de Dados" as DB
+participant "Log" as Log
+
+App -> DB : Tenta salvar novo usuário
+DB --> App : Erro de salvamento
+
+App -> Log : Registra erro no log interno
+Log --> App : Confirma log
+
+App -> UI : Retorna mensagem de erro
+UI -> Usuario : Exibe "Ocorreu um erro ao salvar o cadastro. Por favor, tente novamente mais tarde."
+UI -> Usuario : Permanece na tela de cadastro
+@enduml
