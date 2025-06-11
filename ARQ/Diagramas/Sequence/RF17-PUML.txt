@@ -1,0 +1,133 @@
+@startuml
+header 
+SEQ06-RF17-PRINCIPAL
+endheader
+
+footer
+Referente ao fluxo principal do RF17 no documento de requisitos
+endfooter
+
+title Cadastrar Evento
+
+actor Usuario
+participant "Tela de Cadastro de Evento" as UI
+participant "Sistema" as App
+database "Banco de Dados" as DB
+
+== Início ==
+Usuario -> UI : Seleciona opção "Cadastrar novo evento"
+UI -> App : Solicita dados necessários
+App -> UI : Exibe formulário com campos:\n- Nome do evento\n- Índice H5\n- Áreas CNPq\n- Link do evento\n- Vínculo SBC\n- Link Google Scholar\n- Link SOL-SBC
+
+Usuario -> UI : Preenche os dados do formulário
+
+Usuario -> UI : Clica em "Salvar e Continuar"
+UI -> App : Envia dados preenchidos
+
+== Verificação de Duplicidade ==
+App -> DB : Busca eventos similares por nome ou link
+note right of App
+[A1] Se houver similaridade elevada, ver Fluxo A1
+end note
+DB --> App : Nenhum evento similar encontrado
+
+== Validação e Armazenamento ==
+App -> App : Valida obrigatórios, H5 numérico e URLs
+note right of App
+[A2] Se houver dados inválidos ou campos obrigatórios ausentes, ver Fluxo A2
+end note
+
+App -> DB : Armazena evento com status "Pendente de Classificação"
+note right of App
+[A3] Se ocorrer falha no salvamento, ver Fluxo A3
+end note
+DB --> App : Confirmação de salvamento
+
+== Finalização ==
+App -> UI : Exibe mensagem "Dados do evento '[Nome]' salvos com sucesso"
+UI -> Usuario : Exibe mensagem de sucesso
+
+App -> UI : Redireciona para tela de revisão dos dados
+UI -> Usuario : Exibe botão "Calcular Classificação do Evento"
+@enduml
+
+
+@startuml
+header 
+SEQ07-RF17-A1
+endheader
+
+footer
+Referente ao fluxo secundário 5.3 do RF17 no documento de requisitos
+endfooter
+
+title A1 - Potencial Duplicidade Detectada
+
+actor Usuario
+participant "Tela de Cadastro de Evento" as UI
+participant "Sistema" as App
+database "Banco de Dados" as DB
+
+App -> DB : Busca eventos similares
+DB --> App : Retorna lista de eventos com alta similaridade
+
+App -> UI : Exibe alerta com eventos similares\n(nome, link, classificação se existente)
+UI -> Usuario : Exibe pergunta:\n"Deseja prosseguir com novo cadastro\nou utilizar evento existente?"
+
+Usuario -> UI : Escolhe opção
+
+alt Escolhe "Cancelar cadastro"
+    UI -> App : Encerra fluxo
+    App -> UI : Redireciona para tela de busca
+else Escolhe "Prosseguir com novo cadastro"
+    UI -> App : Retorna ao passo 6 do fluxo principal
+end
+@enduml
+
+@startuml
+header 
+SEQ08-RF17-A2
+endheader
+
+footer
+Referente ao fluxo secundário 6.1 do RF17 no documento de requisitos
+endfooter
+
+title A2 - Dados Inválidos ou Incompletos
+
+actor Usuario
+participant "Tela de Cadastro de Evento" as UI
+participant "Sistema" as App
+
+App -> App : Valida campos obrigatórios e formatos
+App -> UI : Informa campos inválidos ou ausentes
+
+UI -> Usuario : Destaca campos com erro
+UI -> Usuario : Exibe mensagem indicando os erros
+UI -> Usuario : Permite correção dos dados
+@enduml
+
+
+@startuml
+header 
+SEQ09-RF17-A3
+endheader
+
+footer
+Referente ao fluxo secundário 7.1 do RF17 no documento de requisitos
+endfooter
+
+title A3 - Erro ao Salvar no Banco de Dados
+
+actor Usuario
+participant "Tela de Cadastro de Evento" as UI
+participant "Sistema" as App
+database "Banco de Dados" as DB
+
+App -> DB : Tenta salvar os dados do evento
+DB --> App : Retorna erro
+
+App -> UI : Retorna mensagem de erro
+UI -> Usuario : Exibe mensagem de erro
+UI -> Usuario : Mantém dados preenchidos para nova tentativa
+@enduml

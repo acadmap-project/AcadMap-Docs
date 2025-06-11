@@ -1,0 +1,77 @@
+@startuml
+header 
+SEQ12-RF15-PRINCIPAL
+endheader
+
+footer
+Referente ao fluxo principal do RF15 no documento de requisitos
+endfooter
+
+title Aprovar ou Negar Cadastro de Publicação
+
+actor Auditor
+participant "Tela de Análise de Cadastros" as UI
+participant "Sistema" as App
+database "Banco de Dados" as DB
+database "Histórico de Auditoria" as Log
+
+== Início ==
+Auditor -> UI : Acessa "Análise de Cadastros"
+UI -> App : Solicita lista de cadastros pendentes
+App -> DB : Recupera cadastros com status "pendente"
+DB --> App : Lista de cadastros pendentes
+App -> UI : Exibe lista de cadastros
+
+Auditor -> UI : Seleciona um cadastro submetido por outro usuário
+UI -> App : Solicita dados completos do cadastro
+App -> DB : Busca detalhes do cadastro
+DB --> App : Detalhes retornados
+App -> UI : Exibe detalhes (nome, links, dados de classificação)
+note right of UI
+[A1] Caso o auditor decida negar o cadastro, ver Fluxo A1
+end note
+
+Auditor -> UI : Avalia e clica em "Aprovar"
+UI -> App : Envia aprovação
+App -> DB : Atualiza status para "aprovado"
+App -> DB : Remove da lista de pendências
+DB --> App : Confirmação de atualização
+App -> Log : Registra ação de aprovação (ID, data)
+
+App -> UI : Retorna mensagem de sucesso
+UI -> Auditor : Exibe mensagem de sucesso
+@enduml
+
+
+@startuml
+header 
+SEQ13-RF15-A1
+endheader
+
+footer
+Referente ao fluxo secundário 3.1 do RF15 no documento de requisitos
+endfooter
+
+title A1 - Negação de Cadastro
+
+actor Auditor
+participant "Tela de Análise de Cadastros" as UI
+participant "Sistema" as App
+database "Banco de Dados" as DB
+database "Histórico de Auditoria" as Log
+
+== Processo de Negação ==
+Auditor -> UI : Seleciona cadastro e clica em "Negar"
+UI -> App : Solicita confirmação da negação
+App -> UI : Exibe caixa de diálogo para motivo da negação
+
+Auditor -> UI : Informa motivo e confirma
+UI -> App : Envia motivo e confirmação
+App -> DB : Atualiza status para "negado"
+App -> DB : Remove da lista de pendências
+DB --> App : Confirmação de atualização
+App -> Log : Registra ação e motivo no histórico de auditoria
+
+App -> UI : Retorna mensagem de sucesso
+UI -> Auditor : Exibe mensagem de sucesso
+@enduml
