@@ -1,0 +1,196 @@
+@startuml
+header
+SEQ15-RF06-UNIFICADO
+endheader
+
+footer
+Fluxo principal e fluxo alternativo 2.1 do RF06 – Cálculo da Classificação de Periódico (Frontend)
+endfooter
+
+title RF06 – Cálculo da Classificação de Periódico (Frontend)
+
+actor "u:Usuário" as u
+participant "fo:Formulário" as fp
+participant ":FormularioEvento" as cu
+
+== Cálculo no Frontend ==
+u -> fp : Preenche formulário e aciona cálculo
+fp -> cu : validarCamposObrigatorios()
+
+alt Campos válidos
+    fp -> cu : calcularClassificacaoPeriodico(percentil)
+
+    alt percentil >= 87.5
+        cu -> cu : retorna 'a1'
+    else percentil >= 75
+        cu -> cu : retorna 'a2'
+    else percentil >= 62.5
+        cu -> cu : retorna 'a3'
+    else percentil >= 50
+        cu -> cu : retorna 'a4'
+    else percentil >= 37.5
+        cu -> cu : retorna 'a5'
+    else percentil >= 25
+        cu -> cu : retorna 'a6'
+    else percentil < 25
+        cu -> cu : retorna 'nao_classificado'
+    end
+
+    cu -> fp : Classificação base calculada
+    fp -> u : Exibe classificação na interface
+
+else Campos inválidos
+    cu -> fp : Retorna lista de campos com erro
+    fp -> u : Exibe mensagens de erro detalhadas
+end
+@enduml
+
+===
+
+@startuml
+header
+SEQ15-RF19-Principal
+endheader
+
+footer
+Fluxo principal e fluxo alternativo A1 do RF19 (falha ao salvar no banco)
+endfooter
+
+title RF19 – Aplicar Regras de Indução para Evento com Vínculo à SBC
+
+actor "u:Usuário" as u
+participant "fo:Formulario" as ve
+participant ":FormularioEvento" as cu
+participant ":EventoController" as ec
+participant ":CriarEventoService" as es
+participant ":RegistrarLogService" as log
+database ":EventoRepository" as repo
+
+== Confirmação de Cadastro ==
+u -> ve : Clica em "Confirmar Cadastro"
+ve -> cu : calcularClassificacaoEvento(h5, vinculoSbc)
+
+alt Vínculo inexistente ou 'sem_vinculo'
+    cu -> cu : calcClassEventoSemSBC(h5)
+else Vínculo informado
+    alt H5 == 0
+        alt Vínculo == 'vinculo_top_10' ou 'vinculo_top_20'
+            cu -> cu : classifica como 'a7'
+        else Vínculo == 'vinculo_comum'
+            cu -> cu : classifica como 'a8'
+        end
+    else H5 > 0
+        cu -> cu : base = calcClassEventoSemSBC(h5)
+        alt Vínculo == 'vinculo_top_10'
+            cu -> cu : elevarClassificacao(base, 2) com teto A3
+        else Vínculo == 'vinculo_top_20'
+            cu -> cu : elevarClassificacao(base, 1) com teto A3
+        else
+            cu -> cu : usa classificação base
+        end
+    end
+end
+
+cu -> ve : Retorna classificação final
+
+== Envio ao Backend ==
+ve -// ec : [POST /events] Envia evento com classificação final
+ec -> es : salvar(evento)
+es -> repo : Persiste evento com classificação final
+
+alt Sucesso
+    repo --> es : Confirmação
+    es -> log : registrar(evento, AÇÃO_CADASTRO)
+    log --> es : Confirmação
+    es -> ec : Sucesso
+    ec -> ve : HTTP 200 OK
+    ve -> u : Exibe mensagem de sucesso
+else Falha ao salvar
+    repo --> es : Erro de persistência
+    es -> ec : Lança exceção
+    ec -> ve : HTTP 500 + mensagem de erro
+    ve -> u : Exibe mensagem de erro
+    ec -> ec : Registra erro no log interno
+end
+@enduml
+
+===
+
+@startuml
+header
+SEQ16-RF21 – Cadastro de Periódico
+endheader
+
+footer
+Fluxo principal e fluxos alternativos do RF21: 2.1 (vínculo SBC), 5.3 (duplicidade), 6.1 (validação), 7.1 (erro de persistência)
+endfooter
+
+title RF21 – Cadastro de Periódico
+
+actor "u:Usuário" as u
+participant "fp:FormularioPeriodico" as fp
+participant ":PeriodicoController" as pc
+participant ":CriarPeriodicoService" as cps
+participant ":RegistrarLogService" as log
+database ":PeriodicoRepository" as repo
+database ":AreaPesquisaRepository" as ar
+database ":UsuarioRepository" as ur
+
+== Início ==
+u -> fp : Acessa formulário de novo periódico
+
+== Preenchimento ==
+fp -> fp : Exibe campos padrão
+alt Vínculo com SBC selecionado
+    fp -> fp : Exibe campos extras (Google Scholar, Qualis antigo)
+end
+u -> fp : Preenche dados e clica em "Salvar e Continuar"
+
+== Envio ao Backend ==
+fp -[#blue,dashed]> pc : [POST /api/periodicos/cadastro] dto, idUser, forcar
+
+== Verificação de Duplicidade ==
+pc -> cps : criarPeriodico(dto, idUser, forcar)
+cps -> repo : findByNomeContainingIgnoreCase(dto.nome)
+alt Similares encontrados E !forcar
+    cps -> pc : Lança PeriodicoDuplicadoException
+    pc -> fp : HTTP 409 + lista de periódicos similares
+    fp -> u : Exibe alerta de duplicidade
+
+    alt Usuário escolhe "Cancelar"
+        fp -> u : Retorna à tela de busca
+    else Usuário escolhe "Prosseguir"
+        fp -> pc : [POST] dto, idUser, forcar=true
+        pc -> cps : criarPeriodico(dto, idUser, forcar=true)
+    end
+end
+
+== Validação ==
+cps -> ar : findAllById(dto.areasPesquisaIds)
+alt Alguma área inválida OU campo obrigatório mal preenchido
+    cps -> pc : Lança IllegalArgumentException
+    pc -> fp : HTTP 400 + erros de validação
+    fp -> u : Exibe mensagens de erro
+
+end
+
+cps -> ur : findByIdAndFetchProgramaEagerly(idUser)
+ur --> cps : Retorna Usuario
+
+== Persistência ==
+cps -> repo : save(periodico)
+alt Sucesso
+    repo --> cps : Periodico salvo
+    cps -> log : registrarCadastroPeriodico(periodico, usuario)
+    log --> cps : OK
+    cps -> pc : Retorna DTO
+    pc -> fp : HTTP 201 + DTO
+    fp -> u : Exibe mensagem de sucesso
+    fp -> u : Redireciona para tela de revisão
+else Falha
+    cps -> pc : Lança RuntimeException
+    pc -> fp : HTTP 500 + erro
+    fp -> u : Exibe erro e mantém dados preenchidos
+
+end
+@enduml
