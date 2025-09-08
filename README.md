@@ -3,6 +3,8 @@ Esse repositório é dedicado para o versionamento dos documentos e diagramas ge
 
 Página da documentação: [https://acadmap-project.github.io/AcadMap-Docs/](https://acadmap-project.github.io/AcadMap-Docs/)
 
+[Manual do Sistema](https://youtu.be/OquF-UTvZsk)
+
 ## Como fazer o build da documentação localmente
 ### Passo 1
 Certifique-se de ter o Python 3.10+ instalado, e rode o comando a seguir na raiz do repositório
